@@ -7,8 +7,11 @@
                     "@testing-library/jest-dom": "^5.16.4",
                     "@testing-library/react": "^13.3.0",
                     "@testing-library/user-event": "^13.5.0",
+<<<<<<< HEAD
+=======
                     "axios": "^0.27.2",
                     "curl": "^0.1.4",
+>>>>>>> 9a61c901339976defd8c7c88dee54a86d54b5768
                     "react": "^18.1.0",
                     "react-dom": "^18.1.0",
                     "react-icons": "^4.4.0",

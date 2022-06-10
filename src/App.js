@@ -43,13 +43,11 @@ function App() {
                     { value: 'minas-gerais', label: 'Minas Gerais - BH' },
                     { value: 'rio-janeiro', label: 'Rio de Janeiro - RJ' }
           ]
-
           const optionsRaio = [
                     { value: '100', label: '100km' },
                     { value: '200', label: '200km' },
                     { value: '300', label: '300km' }
           ]
-
           const optionModelo = [
                     // API
           ]

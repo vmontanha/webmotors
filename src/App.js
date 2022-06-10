@@ -1,24 +1,73 @@
+<<<<<<< HEAD
 import React from 'react'
+=======
+import React, { useState, useEffect } from 'react'
+>>>>>>> 9a61c901339976defd8c7c88dee54a86d54b5768
 import './assets/css/App.css';
 import logo from './assets/img/logo.svg'
 import iconCar from './assets/img/icon__car.svg'
 import motoPng from './assets/img/MOTO 64G.png'
 import Select from 'react-select';
+<<<<<<< HEAD
 
 function App() {
+=======
+import axios from 'axios';
+function App() {
+
+          const [make, setMake] = useState([]);
+          const [model, setModel] = useState([]);
+          const [version, setVersion] = useState([]);
+
+          const api = axios.create({
+                    baseURL: "https://desafioonline.webmotors.com.br/api/OnlineChallenge",
+          });
+
+          useEffect(() => {
+                    api
+                              .get("/Make")
+                              .then((response) => setMake(response.data))
+                              .catch((err) => {
+                                        console.error("ops! ocorreu um erro" + err);
+                              });
+                    api
+                              .get("Model?MakeID=1")
+                              .then((response) => setModel(response.data))
+                              .catch((err) => {
+                                        console.error("ops! ocorreu um erro" + err);
+                              });
+                    api
+                              .get("Version?ModelID=1")
+                              .then((response) => setVersion(response.data))
+                              .catch((err) => {
+                                        console.error("ops! ocorreu um erro" + err);
+                              });
+          }, []);
+
+
+
+>>>>>>> 9a61c901339976defd8c7c88dee54a86d54b5768
           const optionsCitys = [
                     { value: 'sao-paulo', label: 'São Paulo - SP' },
                     { value: 'minas-gerais', label: 'Minas Gerais - BH' },
                     { value: 'rio-janeiro', label: 'Rio de Janeiro - RJ' }
           ]
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9a61c901339976defd8c7c88dee54a86d54b5768
           const optionsRaio = [
                     { value: '100', label: '100km' },
                     { value: '200', label: '200km' },
                     { value: '300', label: '300km' }
           ]
+<<<<<<< HEAD
           const optionsMarca = [
                     // API
           ]
+=======
+
+>>>>>>> 9a61c901339976defd8c7c88dee54a86d54b5768
           const optionModelo = [
                     // API
           ]
@@ -60,7 +109,11 @@ function App() {
                               borderRadius: 2,
                               color: '#ccc',
                               ':before': {
+<<<<<<< HEAD
                                         content: "'Onde:'",
+=======
+                                        content: "'Versão:'",
+>>>>>>> 9a61c901339976defd8c7c88dee54a86d54b5768
                                         display: 'block',
                                         marginRight: 0,
                                         marginTop: 10,
@@ -151,10 +204,17 @@ function App() {
                                         </div>
                                         <div className="box__marca-modelo">
                                                   <div className='box__marca'>
+<<<<<<< HEAD
                                                             <Select options={optionsMarca} className="select" placeholder={"Marca:"} styles={customeMarca} />
                                                   </div>
                                                   <div className='box__modelo'>
                                                             <Select options={optionModelo} placeholder={"Modelo:"} styles={customRaio} />
+=======
+                                                            <Select options={make.map(e => ({ label: e.Name, value: e.ID }))} className="select" placeholder={"Marca:"} styles={customeMarca} />
+                                                  </div>
+                                                  <div className='box__modelo'>
+                                                            <Select options={model.map(e => ({ label: e.Name, value: e.ID }))} placeholder={"Modelo:"} styles={customRaio} />
+>>>>>>> 9a61c901339976defd8c7c88dee54a86d54b5768
                                                   </div>
                                         </div>
                                         <div className="box__ano-preco">
@@ -168,7 +228,11 @@ function App() {
 
                                         </div>
                                         <div className="box__versao">
+<<<<<<< HEAD
                                                   <Select styles={customVersao} defaultValue={optionsVersao[0]} />
+=======
+                                                  <Select styles={customVersao} defaultValue={optionsVersao[0]} options={version.map(e => ({ label: e.Name, value: e.ID }))} />
+>>>>>>> 9a61c901339976defd8c7c88dee54a86d54b5768
                                         </div>
 
                                         <div className='block__ofertas'>

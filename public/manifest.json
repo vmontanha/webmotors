@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "short_name": "React App",
   "name": "Create React App Sample",
   "icons": [
@@ -23,3 +24,13 @@
   "theme_color": "#000000",
   "background_color": "#ffffff"
 }
+=======
+          "short_name": "React App",
+          "name": "Create React App Sample",
+          "icons": [],
+          "start_url": ".",
+          "display": "standalone",
+          "theme_color": "#000000",
+          "background_color": "#ffffff"
+}
+>>>>>>> 9a61c901339976defd8c7c88dee54a86d54b5768

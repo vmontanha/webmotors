@@ -5,12 +5,16 @@ import iconCar from './assets/img/icon__car.svg'
 import motoPng from './assets/img/MOTO 64G.png'
 import Select from 'react-select';
 import axios from 'axios';
+
+
 function App() {
 
           const [make, setMake] = useState([]);
           const [model, setModel] = useState([]);
           const [version, setVersion] = useState([]);
-          const [selectID, setSelectedID] = useState("0");
+          const [selectedMakeID, setSelectedMakeID] = useState(0);
+          const [selectedModelID, setSelectedModelID] = useState(0);
+          const [selectedVersionID, setSelectedVersionID] = useState(0);
 
           const api = axios.create({
                     baseURL: "https://desafioonline.webmotors.com.br/api/OnlineChallenge",
@@ -26,24 +30,35 @@ function App() {
           }, []);
 
           useEffect(() => {
-
-                    api
-                              .get(
-                                        `/Make?Model=${selectID}`
-                              )
+                    api.get(`/Model?MakeID=${selectedMakeID}`
+                    )
                               .then((response) => {
                                         setModel(response.data);
                               });
-          });
+          }, [selectedMakeID]);
+
+          useEffect(() => {
+                    api.get(`/Version?ModelID=${selectedModelID}`
+                    )
+                              .then((response) => {
+                                        setVersion(response.data)
+                                        console.log(version);
+                              });
+
+          }, [selectedMakeID]);
 
           function handleChangeMake(event) {
-                    const marca = event.target.value;
-                    setSelectedID(marca);
+                    const marca = event.value;
+                    setSelectedMakeID(marca);
           }
 
           function handleChangeModel(event) {
-                    const modelo = event.target.value;
-                    setModel(modelo);
+                    const modelo = event.value;
+                    setSelectedModelID(modelo);
+          }
+          function handleChangeVersion(event) {
+                    const versao = event.value;
+                    setVersion(versao);
           }
           const optionsCitys = [
                     { value: 'sao-paulo', label: 'São Paulo - SP' },
@@ -186,19 +201,20 @@ function App() {
                                         </div>
                                         <div className="box__marca-modelo">
                                                   <div className='box__marca'>
-                                                            <Select options={make.map((marca) => ({ label: marca.Name, value: marca.ID }))}
+                                                            <Select
+                                                                      options={make.map((marca) => ({ label: marca.Name, value: marca.ID }))}
                                                                       className="select"
                                                                       placeholder={"Marca:"}
                                                                       styles={customeMarca}
-                                                                      onChange={handleChangeMake}
-                                                                      value={selectID}
+                                                                      onChange={(e) => handleChangeMake(e)}
                                                             />
                                                   </div>
                                                   <div className='box__modelo'>
-                                                            <Select options={model.map((modelo) => ({ label: modelo.Name, value: modelo.ID }))}
+                                                            <Select
+                                                                      options={model.map((modelo) => ({ label: modelo.Name, value: modelo.ID }))}
                                                                       placeholder={"Modelo:"}
                                                                       styles={customRaio}
-                                                                      onChange={handleChangeModel}
+                                                                      onChange={(e) => handleChangeModel(e)}
                                                             />
                                                   </div>
                                         </div>
@@ -213,7 +229,10 @@ function App() {
 
                                         </div>
                                         <div className="box__versao">
-                                                  <Select styles={customVersao} defaultValue={optionsVersao[0]} options={version.map(e => ({ label: e.Name, value: e.ID }))} />
+                                                  <Select styles={customVersao}
+                                                            defaultValue={optionsVersao[0]}
+                                                            options={version.map(e => ({ label: e.Name, value: e.ID }))}
+                                                  />
                                         </div>
 
                                         <div className='block__ofertas'>
@@ -221,7 +240,7 @@ function App() {
                                         </div>
 
                                         <div className='block__limpar__filtros'>
-                                                  <a href='#' className='btn__limpar__filtros' >Limpar Filtros</a>
+                                                  <a href='#' className='btn__limpar__filtros'>Limpar Filtros</a>
                                         </div>
 
 

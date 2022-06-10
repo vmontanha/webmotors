@@ -1,24 +1,55 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import './assets/css/App.css';
 import logo from './assets/img/logo.svg'
 import iconCar from './assets/img/icon__car.svg'
 import motoPng from './assets/img/MOTO 64G.png'
 import Select from 'react-select';
-
+import axios from 'axios';
 function App() {
+
+          const [make, setMake] = useState([]);
+          const [model, setModel] = useState([]);
+          const [version, setVersion] = useState([]);
+
+          const api = axios.create({
+                    baseURL: "https://desafioonline.webmotors.com.br/api/OnlineChallenge",
+          });
+
+          useEffect(() => {
+                    api
+                              .get("/Make")
+                              .then((response) => setMake(response.data))
+                              .catch((err) => {
+                                        console.error("ops! ocorreu um erro" + err);
+                              });
+                    api
+                              .get("Model?MakeID=1")
+                              .then((response) => setModel(response.data))
+                              .catch((err) => {
+                                        console.error("ops! ocorreu um erro" + err);
+                              });
+                    api
+                              .get("Version?ModelID=1")
+                              .then((response) => setVersion(response.data))
+                              .catch((err) => {
+                                        console.error("ops! ocorreu um erro" + err);
+                              });
+          }, []);
+
+
+
           const optionsCitys = [
                     { value: 'sao-paulo', label: 'São Paulo - SP' },
                     { value: 'minas-gerais', label: 'Minas Gerais - BH' },
                     { value: 'rio-janeiro', label: 'Rio de Janeiro - RJ' }
           ]
+
           const optionsRaio = [
                     { value: '100', label: '100km' },
                     { value: '200', label: '200km' },
                     { value: '300', label: '300km' }
           ]
-          const optionsMarca = [
-                    // API
-          ]
+
           const optionModelo = [
                     // API
           ]
@@ -60,7 +91,7 @@ function App() {
                               borderRadius: 2,
                               color: '#ccc',
                               ':before': {
-                                        content: "'Onde:'",
+                                        content: "'Versão:'",
                                         display: 'block',
                                         marginRight: 0,
                                         marginTop: 10,
@@ -151,10 +182,10 @@ function App() {
                                         </div>
                                         <div className="box__marca-modelo">
                                                   <div className='box__marca'>
-                                                            <Select options={optionsMarca} className="select" placeholder={"Marca:"} styles={customeMarca} />
+                                                            <Select options={make.map(e => ({ label: e.Name, value: e.ID }))} className="select" placeholder={"Marca:"} styles={customeMarca} />
                                                   </div>
                                                   <div className='box__modelo'>
-                                                            <Select options={optionModelo} placeholder={"Modelo:"} styles={customRaio} />
+                                                            <Select options={model.map(e => ({ label: e.Name, value: e.ID }))} placeholder={"Modelo:"} styles={customRaio} />
                                                   </div>
                                         </div>
                                         <div className="box__ano-preco">
@@ -168,7 +199,7 @@ function App() {
 
                                         </div>
                                         <div className="box__versao">
-                                                  <Select styles={customVersao} defaultValue={optionsVersao[0]} />
+                                                  <Select styles={customVersao} defaultValue={optionsVersao[0]} options={version.map(e => ({ label: e.Name, value: e.ID }))} />
                                         </div>
 
                                         <div className='block__ofertas'>
